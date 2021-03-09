@@ -1,5 +1,2 @@
-Irish cheeze cake
+so we are done with github 
 
-okay 
-I have done this 
-yes
