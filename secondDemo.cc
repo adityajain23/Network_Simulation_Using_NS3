@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
     pointToPoint1.SetChannelAttribute("Delay", StringValue("2ms"));
     NetDeviceContainer server1Devices;
     server1Devices = pointToPoint1.Install(server1Nodes);
-    // Import internet stack on nodes.
+    // Import internet stack on nodes.  
     InternetStackHelper stack1;
     stack1.Install(server1Nodes);
     // Assign IP addresses to net devices
@@ -194,6 +194,18 @@ int main(int argc, char *argv[])
     ApplicationContainer clientAppsLAN = echoClientLAN.Install(csmaNodes.Get (nCsma));
     clientAppsLAN.Start(Seconds(12.0));
     clientAppsLAN.Stop(Seconds(20.0));
+    
+// ------------------------------------------------------------------------------------------------------------
+// Create WIFI Network
+
+
+
+
+
+
+
+
+
 
 // ------------------------------------------------------------------------------------------------------------
 
