@@ -46,7 +46,7 @@
 //  |                                           |
 // n1  n2   n3   n4                           WiFi
 // |    |    |    |                            n0*    n1*    n2*
-// ================                          ApNode     10.30.10.0 
+// ================                          ApNode     10.10.30.0 
 //   LAN 10.1.1.0
 
 
@@ -287,7 +287,7 @@ int main(int argc, char *argv[])
 
     // Assign IP addresses to Devices
     Ipv4AddressHelper address5;
-    address5.SetBase("10.10.10.0", "255.255.255.0"); // remote
+    address5.SetBase("10.10.10.0", "255.255.255.0");
     Ipv4InterfaceContainer interfaces4;
     interfaces4 = address5.Assign(WifiServerDevices);
     
