@@ -29,11 +29,12 @@
 //
 //    *     *     *
 //    |     |     |
-//    n2    n1    n0 ------------------------ Rs
+//    n2    n1    n0 ------------------------ Rs (Remote Server)
 //                AP     point-to-point
 
 using namespace ns3;
 
+//Define Log Component
 NS_LOG_COMPONENT_DEFINE("HomeNetwork");
 
 int main(int argc, char *argv[])
@@ -65,16 +66,24 @@ int main(int argc, char *argv[])
         LogComponentEnable("UdpEchoClientApplication", LOG_LEVEL_INFO);
         LogComponentEnable("UdpEchoServerApplication", LOG_LEVEL_INFO);
     }
-
+    //-------------------------------------------------------------------------------------------------------------------
+    //Create nodes Rs(Remote Server) and n0 
     NodeContainer p2pNodes;
     p2pNodes.Create(2);
-
+    
+    //Establishes a Point to Point (P2P) connection between Rs and n0
+    
     PointToPointHelper pointToPoint;
     pointToPoint.SetDeviceAttribute("DataRate", StringValue("5Mbps"));
     pointToPoint.SetChannelAttribute("Delay", StringValue("2ms"));
 
     NetDeviceContainer p2pDevices;
     p2pDevices = pointToPoint.Install(p2pNodes);
+    
+    InternetStackHelper stack;
+    stack.Install(p2pNodes.Get(1));
+    
+    //-----------------------------------------------------------------------------------------------------------------------
 
     NodeContainer wifiStaNodes;
     wifiStaNodes.Create(nWifi);
@@ -116,17 +125,20 @@ int main(int argc, char *argv[])
                               "Bounds", RectangleValue(Rectangle(-50, 50, -50, 50)));
     mobility.Install(wifiStaNodes);
 
-    mobility.SetMobilityModel("ns3::ConstantPositionMobilityModel");
+
+    //Access Point AP is stationary and does not move
+    mobility.SetMobilityModel("ns3::ConstantPositionMobilityModel");  
     mobility.Install(wifiApNode);
 
-    InternetStackHelper stack;
-    stack.Install(p2pNodes.Get(1));
+    
     stack.Install(wifiApNode);
     stack.Install(wifiStaNodes);
 
+
+    //Assign IP addresses to net devices
     Ipv4AddressHelper address;
 
-    address.SetBase("10.1.1.0", "255.255.255.0"); //10.1.1.2 remote
+    address.SetBase("10.1.1.0", "255.255.255.0"); //10.1.1.2 remote server
     Ipv4InterfaceContainer p2pInterfaces;
     p2pInterfaces = address.Assign(p2pDevices);
 
@@ -137,9 +149,14 @@ int main(int argc, char *argv[])
     wifiNodesInterfaces = address.Assign(staDevices);
 
     apNodeInterface = address.Assign(apDevices);
-    // setting  applications
+    
+    //--------------------------------------------------------------------------------------
+    // Setting  applications
+    //--------------------------------------------------------------------------------------
+    
+    //Laptop to Rs and Mobile to Rs
     UdpEchoServerHelper echoServer(9);
-
+    //Make server Rs
     ApplicationContainer serverApps = echoServer.Install(p2pNodes.Get(1));
     serverApps.Start(Seconds(1.0));
     serverApps.Stop(Seconds(10.0));
@@ -148,23 +165,23 @@ int main(int argc, char *argv[])
     echoClient.SetAttribute("MaxPackets", UintegerValue(1));
     echoClient.SetAttribute("Interval", TimeValue(Seconds(1.0)));
     echoClient.SetAttribute("PacketSize", UintegerValue(1024));
-
+    //Make client on Laptop and Mobile
     ApplicationContainer clientApps = echoClient.Install(wifiStaNodes.Get(nWifi - 1));
     clientApps.Start(Seconds(2.0));
     clientApps.Stop(Seconds(10.0));
-    // //client 2
-   
+
     ApplicationContainer client1Apps = echoClient.Install(wifiStaNodes.Get(nWifi - 2));
     client1Apps.Start(Seconds(3.0));
     client1Apps.Stop(Seconds(10.0));
-
+  
+    
     //Laptop to Mobile communcation
     UdpEchoServerHelper echo1Server(13);
-
+    //Make server on Laptop
     ApplicationContainer server1Apps = echo1Server.Install(wifiStaNodes.Get(0));
     server1Apps.Start(Seconds(11.0));
     server1Apps.Stop(Seconds(20.0));
-
+    //Make client on Mobile
     UdpEchoClientHelper echo1Client(wifiNodesInterfaces.GetAddress(0), 13);
     echo1Client.SetAttribute("MaxPackets", UintegerValue(1));
     echo1Client.SetAttribute("Interval", TimeValue(Seconds(1.0)));
@@ -184,7 +201,7 @@ int main(int argc, char *argv[])
         pointToPoint.EnablePcapAll("Home_Network",p2pDevices.Get(0));
         phy.EnablePcap("Home_Network", apDevices.Get(0));
         phy.EnablePcap("Home_Network", staDevices.Get(0));
-        //csma.EnablePcap ("HomeNetwork", csmaDevices.Get (0), true);
+        phy.EnablePcap("Home_Network", staDevices.Get(1));
     }
     AnimationInterface anim ("HomeNetwork.xml");
     anim.SetConstantPosition (p2pNodes.Get (1), 10.0, 20.0);
