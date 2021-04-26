@@ -23,7 +23,7 @@
 #include "ns3/csma-module.h"
 #include "ns3/internet-module.h"
 #include "ns3/yans-wifi-helper.h"
-#include "ns3/ssid.h" 
+#include "ns3/ssid.h"
 #include "ns3/netanim-module.h"
 //   Wifi 10.1.3.0
 //
@@ -67,22 +67,22 @@ int main(int argc, char *argv[])
         LogComponentEnable("UdpEchoServerApplication", LOG_LEVEL_INFO);
     }
     //-------------------------------------------------------------------------------------------------------------------
-    //Create nodes Rs(Remote Server) and n0 
+    //Create nodes Rs(Remote Server) and n0
     NodeContainer p2pNodes;
     p2pNodes.Create(2);
-    
+
     //Establishes a Point to Point (P2P) connection between Rs and n0
-    
+
     PointToPointHelper pointToPoint;
     pointToPoint.SetDeviceAttribute("DataRate", StringValue("5Mbps"));
     pointToPoint.SetChannelAttribute("Delay", StringValue("2ms"));
 
     NetDeviceContainer p2pDevices;
     p2pDevices = pointToPoint.Install(p2pNodes);
-    
+
     InternetStackHelper stack;
     stack.Install(p2pNodes.Get(1));
-    
+
     //-----------------------------------------------------------------------------------------------------------------------
 
     NodeContainer wifiStaNodes;
@@ -125,15 +125,13 @@ int main(int argc, char *argv[])
                               "Bounds", RectangleValue(Rectangle(-50, 50, -50, 50)));
     mobility.Install(wifiStaNodes);
 
-
     //Access Point AP is stationary and does not move
-    mobility.SetMobilityModel("ns3::ConstantPositionMobilityModel");  
+    mobility.SetMobilityModel("ns3::ConstantPositionMobilityModel");
     mobility.Install(wifiApNode);
+    mobility.Install(p2pNodes.Get(1));
 
-    
     stack.Install(wifiApNode);
     stack.Install(wifiStaNodes);
-
 
     //Assign IP addresses to net devices
     Ipv4AddressHelper address;
@@ -142,18 +140,18 @@ int main(int argc, char *argv[])
     Ipv4InterfaceContainer p2pInterfaces;
     p2pInterfaces = address.Assign(p2pDevices);
 
-    address.SetBase("10.1.3.0", "255.255.255.0");  //10.1.3.1 laptop , 10.1.3.2 mobile
+    address.SetBase("10.1.3.0", "255.255.255.0"); //10.1.3.1 laptop , 10.1.3.2 mobile
     Ipv4InterfaceContainer wifiNodesInterfaces;
     Ipv4InterfaceContainer apNodeInterface;
 
     wifiNodesInterfaces = address.Assign(staDevices);
 
     apNodeInterface = address.Assign(apDevices);
-    
+
     //--------------------------------------------------------------------------------------
     // Setting  applications
     //--------------------------------------------------------------------------------------
-    
+
     //Laptop to Rs and Mobile to Rs
     UdpEchoServerHelper echoServer(9);
     //Make server Rs
@@ -173,8 +171,7 @@ int main(int argc, char *argv[])
     ApplicationContainer client1Apps = echoClient.Install(wifiStaNodes.Get(nWifi - 2));
     client1Apps.Start(Seconds(3.0));
     client1Apps.Stop(Seconds(10.0));
-  
-    
+
     //Laptop to Mobile communcation
     UdpEchoServerHelper echo1Server(13);
     //Make server on Laptop
@@ -190,7 +187,6 @@ int main(int argc, char *argv[])
     ApplicationContainer client3Apps = echo1Client.Install(wifiStaNodes.Get(1));
     client3Apps.Start(Seconds(12.0));
     client3Apps.Stop(Seconds(20.0));
-    
 
     Ipv4GlobalRoutingHelper::PopulateRoutingTables();
 
@@ -198,14 +194,14 @@ int main(int argc, char *argv[])
 
     if (tracing == true)
     {
-        pointToPoint.EnablePcapAll("Home_Network",p2pDevices.Get(0));
+        pointToPoint.EnablePcapAll("Home_Network", p2pDevices.Get(0));
         phy.EnablePcap("Home_Network", apDevices.Get(0));
         phy.EnablePcap("Home_Network", staDevices.Get(0));
         phy.EnablePcap("Home_Network", staDevices.Get(1));
     }
-    AnimationInterface anim ("HomeNetwork.xml");
-    anim.SetConstantPosition (p2pNodes.Get (1), 10.0, 20.0);
-    anim.SetConstantPosition (p2pNodes.Get (0), 3.0, 3.0);
+    AnimationInterface anim("HomeNetwork.xml");
+    anim.SetConstantPosition(p2pNodes.Get(1), 10.0, 20.0);
+    anim.SetConstantPosition(p2pNodes.Get(0), 3.0, 3.0);
     Simulator::Run();
     Simulator::Destroy();
     return 0;

@@ -1,6 +1,6 @@
 Adwait:
 4. what are NetDevices,Internet Stack, Csma, Yanswifichannel, Interface exactly?
-18. Working of a Csma channel?
+18. Working of a Csma channel, WiFI channel?
 7. What is network interface card?
 11. How to set up wifi class? Why do we need to set ssid?
 15. Populating Routing Tables? Which algo?
