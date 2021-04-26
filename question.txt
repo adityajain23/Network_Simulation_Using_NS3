@@ -1,22 +1,49 @@
-1. Who maintains NS3?
-2. Where is NS3 is used in defense/software companies?
-3. Broker connections?
-4. what are NetDevices exactly?
-5. Know excatly what is Internet Stack
-6. Csma, Yanswifichannel, Interface ....
+Adwait:
+4. what are NetDevices,Internet Stack, Csma, Yanswifichannel, Interface exactly?
+18. Working of a Csma channel?
 7. What is network interface card?
+11. How to set up wifi class? Why do we need to set ssid?
+15. Populating Routing Tables? Which algo?
+16. NetAnim?
+
+Jay:
+1. Where is NS3 is used in defense/software companies?
+3. Broker connections?
 8. Mobile gets disconnected from wifi and connects again?
 9. Mobile has it's own mobile data? Can we simulate that?
-10. Propogation delay (Real life examples covered in class)
-11. How to set up wifi class? Why do we need to set ssid?
-12. Wifistanodes and wifiapnodes difference?
-13. What is mobility model?
 14. Addresses, netmask, etc?
-15. Populating Routing Tables?
 16. NetAnim?
-17. Explain tracing? pcap files?
-18. Working of a Csma channel?
 19. Difference between Csma and Wifi?
-20. Why not compile with g++? What is waf?
+
+Gunjan:
+1. Who maintains NS3?
+8. Mobile gets disconnected from wifi and connects again?
+9. Mobile has it's own mobile data? Can we simulate that?
+13. What is mobility model?
+17. Explain tracing? pcap files?
 21. Tracing with wireshark?
-22. 
+
+Common:
+4. what are NetDevices exactly?
+5. Know excatly what is Internet Stack, Csma, Yanswifichannel, Interface
+10. Propogation delay (Real life examples covered in class)
+12. Wifistanodes and wifiapnodes difference?
+20. Why not compile with g++? What is waf?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
