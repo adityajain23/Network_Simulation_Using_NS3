@@ -1,10 +1,45 @@
 Adwait:
 4. what are NetDevices,Internet Stack, Csma, Yanswifichannel, Interface exactly?
+-->
+a. A NIC will not work without a software driver to control the hardware. In Unix (or Linux), a piece of peripheral hardware is classified as a device. Devices are controlled using device drivers, and network devices (NICs) are controlled using network device drivers collectively known as net devices. In Unix and Linux you refer to these net devices by names such as eth0.
+In ns-3 the net device abstraction covers both the software driver and the simulated hardware. A net device is “installed” in a Node in order to enable the Node to communicate with other Nodes in the simulation via Channels. Just as in a real computer, a Node may be connected to more than one Channel via multiple NetDevices.
+
+b. When it is executed, it will install an Internet Stack (TCP, UDP, IP, etc.) on each of the nodes in the node container.
+
+c.CSMA is like a bus to transfer data. Ethernet like network.
+SendEnable: Enable packet transmission if true;
+ReceiveEnable: Enable packet reception if true;
+
+d.
+The SetRemoteStationManager method tells the helper the type of rate control algorithm to use. Here, it is asking the helper to use the AARF algorithm — details are, of course, available in Doxygen.
+
+Next, we configure the type of MAC, the SSID of the infrastructure network we want to setup and make sure that our stations don’t perform active probing:
+service set identifier
+station and access point nodes
+
+e. ???
+
 18. Working of a Csma channel, WiFI channel?
+--> ???
+
+
 7. What is network interface card?
+--> Defined above.
+
+
 11. How to set up wifi class? Why do we need to set ssid?
+--> 
+Once these objects are created, we create a channel object and associate it to our PHY layer object manager to make sure that all the PHY layer objects created by the YansWifiPhyHelper share the same underlying channel, that is, they share the same wireless medium and can communicate and interfere
+AARF--> Rate control Algorthm
+QoS --> Quality of service, prioritize some apps over others
+SSID--> Name of WiFI, makes from the string given
+
+
 15. Populating Routing Tables? Which algo?
+--> Global view so dijktrase
+
 16. NetAnim?
+--> Animation tool for ns3, we can visulaze the network we have generated.
 
 Jay:
 1. Where is NS3 is used in defense/software companies?
