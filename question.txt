@@ -17,11 +17,23 @@ Jay:
 
 Gunjan:
 1. Who maintains NS3?
+-> NS-3 is maintained by a worldwide team of volunteer maintainers.
+
 8. Mobile gets disconnected from wifi and connects again?
+->
+
 9. Mobile has it's own mobile data? Can we simulate that?
+-> Here the mobile phone will first be connected to the cell tower and the connection is wireless. It is pretty similar to being connecte to a wifi router.
+
 13. What is mobility model?
+-> The mobility model helps us in tracking and maintaining the current position of an object/node. We use mobility helper classes to use the mobility system. NS-3 uses the Cartesian coordinate system.
+
 17. Explain tracing? pcap files?
-21. Tracing with wireshark?
+-> The whole idea of running a  simulation is generating output which we can study and do research on. So tracing is the system that helps us in getting that output/info. Ns3 device helpers are used to create trace files. These files give us some interesting info like when a packet was received by a device/node and give some access to packet contents. 
+The trace files are created in pcap file format. The acronym pcap stands for packet capture.
+
+21. Tracing with wireshark/tcpdump?
+->  We can view the trace files in two ways-using wireshark or tcpdump. Tcpdump is a command line utility that helps us in capturing and analyzing network traffic. We can also view and analyze the pcap files using wireshark. 
 
 Common:
 4. what are NetDevices exactly?
