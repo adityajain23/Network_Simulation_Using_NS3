@@ -6,7 +6,8 @@ In ns-3 the net device abstraction covers both the software driver and the simul
 
 b. When it is executed, it will install an Internet Stack (TCP, UDP, IP, etc.) on each of the nodes in the node container.
 
-c.CSMA is like a bus to transfer data. Ethernet like network.
+c. Carrier-sense multiple access (CSMA) is a media access control (MAC) protocol in which a node verifies the absence of other traffic before transmitting on a shared transmission medium, such as an electrical bus or a band of the electromagnetic spectrum.
+CSMA is like a bus to transfer data. Ethernet like network.
 SendEnable: Enable packet transmission if true;
 ReceiveEnable: Enable packet reception if true;
 
